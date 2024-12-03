@@ -12,7 +12,7 @@ class ContactController extends AbstractController
     public function index(): Response
     {
         return $this->render('contact/index.html.twig', [
-            'message' => 'Bienvenue sur la page de contact !',
+            'message' => 'Bienvenue sur la page de contact !, motherfucker',
         ]);
     }
 }
