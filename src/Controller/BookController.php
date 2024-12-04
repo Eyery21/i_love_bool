@@ -18,9 +18,7 @@ final class BookController extends AbstractController
     public function index(BookRepository $bookRepository): Response
     {
         
-        dump('Controller reached'); // Vérifiez si ce message s'affiche
         $books = $bookRepository->findAll();
-        dump($books); // Vérifiez si $books contient des données
     
         return $this->render('book/index.html.twig', [
             'books' => $books,
