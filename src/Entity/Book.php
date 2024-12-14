@@ -20,7 +20,7 @@ class Book
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $desciption = null;
+    private ?string $description = null;
 
   
 
@@ -39,6 +39,27 @@ class Book
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $author = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $illustrator = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $price = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $serie = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $volum_number = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $page_count = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $rating = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -56,14 +77,14 @@ class Book
         return $this;
     }
 
-    public function getDesciption(): ?string
+    public function getDescription(): ?string
     {
-        return $this->desciption;
+        return $this->description;
     }
 
-    public function setDesciption(string $desciption): static
+    public function setDescription(string $description): static
     {
-        $this->desciption = $desciption;
+        $this->description = $description;
 
         return $this;
     }
@@ -129,6 +150,90 @@ class Book
     public function setImage(string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?string $author): static
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getIllustrator(): ?string
+    {
+        return $this->illustrator;
+    }
+
+    public function setIllustrator(?string $illustrator): static
+    {
+        $this->illustrator = $illustrator;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?float $price): static
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getSerie(): ?string
+    {
+        return $this->serie;
+    }
+
+    public function setSerie(?string $serie): static
+    {
+        $this->serie = $serie;
+
+        return $this;
+    }
+
+    public function getVolumNumber(): ?int
+    {
+        return $this->volum_number;
+    }
+
+    public function setVolumNumber(?int $volum_number): static
+    {
+        $this->volum_number = $volum_number;
+
+        return $this;
+    }
+
+    public function getPageCount(): ?int
+    {
+        return $this->page_count;
+    }
+
+    public function setPageCount(?int $page_count): static
+    {
+        $this->page_count = $page_count;
+
+        return $this;
+    }
+
+    public function getRating(): ?float
+    {
+        return $this->rating;
+    }
+
+    public function setRating(?float $rating): static
+    {
+        $this->rating = $rating;
 
         return $this;
     }

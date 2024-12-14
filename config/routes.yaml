@@ -15,3 +15,7 @@ app_book_list:
 app_contact:
     path: /contact
     controller: App\Controller\ContactController::index
+
+dashboard:
+    path: /admin
+    controller: App\Controller\Admin\DashboardController::index

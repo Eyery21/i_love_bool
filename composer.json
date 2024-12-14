@@ -10,7 +10,7 @@
         "doctrine/doctrine-bundle": "*",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.3",
-        "easycorp/easyadmin-bundle": "^4.18",
+        "easycorp/easyadmin-bundle": "^4.20",
         "knplabs/knp-menu-bundle": "^3.4",
         "symfony/console": "7.2.*",
         "symfony/dotenv": "7.2.*",

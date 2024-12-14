@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <th>Desciption</th>
-                <td>{{ book.desciption }}</td>
+                <td>{{ book.description }}</td>
             </tr>
        
             <tr>
@@ -28,6 +28,11 @@
                 <th>Posseded</th>
                 <td>{{ book.posseded ? 'Yes' : 'No' }}</td>
             </tr>
+              {% if book.image %}
+                <img src="/uploads/images/{{ book.image }}" alt="Image du livre" style="max-width: 200px;">
+            {% else %}
+                <em>Pas d'image</em>
+            {% endif %}
         </tbody>
     </table>
 
