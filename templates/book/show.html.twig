@@ -21,8 +21,40 @@
             </tr>
        
             <tr>
-                <th>Parution</th>
-                <td>{{ book.parution }}</td>
+                <th>author</th>
+                <td>{{ book.author}}</td>
+            </tr>
+             
+            <tr>
+                <th>illustrator</th>
+                <td>{{ book.illustrator }}</td>
+            </tr>
+             
+            <tr>
+                <th>price</th>
+                <td>{{ book.price}}</td>
+            </tr>
+             
+            <tr>
+                <th>serie</th>
+                <td>{{ book.serie }}</td>
+            </tr>
+             
+            <tr>
+                <th>volum_number</th>
+                <td>{{ book.volumnumber }}</td>
+            </tr>
+
+             
+            <tr>
+                <th>page_count</th>
+                <td>{{ book.pagecount }}</td>
+            </tr>
+
+             
+            <tr>
+                <th>rating</th>
+                <td>{{ book.rating}}</td>
             </tr>
             <tr>
                 <th>Posseded</th>
@@ -38,7 +70,10 @@
 
     <a href="{{ path('app_book_index') }}">back to list</a>
 
-    <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
+   {% if is_granted('ROLE_ADMIN') %}
 
+                        <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
     {{ include('book/_delete_form.html.twig') }}
+                    {% endif %}
+
 {% endblock %}

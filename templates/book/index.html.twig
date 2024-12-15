@@ -15,7 +15,16 @@
                 <th>Parution</th>
                 <th>Posseded</th>
                 <th>actions</th>
+                <th>author</th>
+                <th>illustrator</th>
+                <th>price</th>
+                <th>serie</th>
+                <th>volum_number</th>
+                <th>page_count</th>
+                <th>rating</th>
+
             </tr>
+ 
         </thead>
         <tbody>
         {% for book in books %}
@@ -25,9 +34,22 @@
                 <td>{{ book.description }}</td>
                 <td>{{ book.parution }}</td>
                 <td>{{ book.posseded ? 'Yes' : 'No' }}</td>
+                <td>{{ book.author}}</td>
+                <td>{{ book.illustrator }}</td>
+                <td>{{ book.price}}</td>
+                <td>{{ book.serie }}</td>
+                <td>{{ book.volumnumber }}</td>
+
+                <td>{{ book.pagecount }}</td>
+                <td>{{ book.rating}}</td>
+
                 <td>
                     <a href="{{ path('app_book_show', {'id': book.id}) }}">show</a>
-                    <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+
+                        <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
+                    {% endif %}
+
                 </td>
                   {% if book.image %}
                 <img src="/uploads/images/{{ book.image }}" alt="Image du livre" style="max-width: 200px;">
@@ -42,6 +64,9 @@
         {% endfor %}
         </tbody>
     </table>
+                    {% if is_granted('ROLE_ADMIN') %}
 
     <a href="{{ path('app_book_new') }}">Create new</a>
+                        {% endif %}
+
 {% endblock %}

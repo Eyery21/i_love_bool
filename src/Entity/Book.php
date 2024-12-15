@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -59,6 +61,17 @@ class Book
 
     #[ORM\Column(nullable: true)]
     private ?float $rating = null;
+
+    /**
+     * @var Collection<int, Character>
+     */
+    #[ORM\ManyToMany(targetEntity: Character::class, inversedBy: 'books')]
+    private Collection $personnage;
+
+    public function __construct()
+    {
+        $this->personnage = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -234,6 +247,30 @@ class Book
     public function setRating(?float $rating): static
     {
         $this->rating = $rating;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Character>
+     */
+    public function getPersonnage(): Collection
+    {
+        return $this->personnage;
+    }
+
+    public function addPersonnage(Character $personnage): static
+    {
+        if (!$this->personnage->contains($personnage)) {
+            $this->personnage->add($personnage);
+        }
+
+        return $this;
+    }
+
+    public function removePersonnage(Character $personnage): static
+    {
+        $this->personnage->removeElement($personnage);
 
         return $this;
     }
