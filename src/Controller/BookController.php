@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Form\BookType;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,13 +17,14 @@ use Symfony\Component\Routing\Attribute\Route;
 final class BookController extends AbstractController
 {
     #[Route( name: 'app_book_index', methods: ['GET'])]
-    public function index(BookRepository $bookRepository): Response
+    public function index(BookRepository $bookRepository, UserRepository $userRepository): Response
     {
         
         $books = $bookRepository->findAll();
-    
-        return $this->render('book/index.html.twig', [
+        $user = $this->getUser();
+                return $this->render('book/index.html.twig', [
             'books' => $books,
+            'user' => $user,
         ]);
     }
 
@@ -81,4 +84,7 @@ final class BookController extends AbstractController
 
         return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
 }

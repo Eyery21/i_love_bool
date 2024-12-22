@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller\Admin;
-
+use App\Entity\User;
 use App\Entity\Book;
 use App\Entity\Character;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;

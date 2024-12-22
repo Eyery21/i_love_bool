@@ -1,3 +1,6 @@
 knp_menu:
     twig:
         template: '@KnpMenu/menu.html.twig'
+    templating: false
+    # the renderer to use, list is also available by default
+    default_renderer: twig

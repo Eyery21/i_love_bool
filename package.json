@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "vis-timeline": "^7.7.3"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^5.0.1",
+    "webpack-notifier": "^1.15.0",
+    "yarn": "^1.22.22"
+  },
+  "scripts": {
+    "dev": "encore dev",
+    "build": "encore production"
+  }
+}
