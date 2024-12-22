@@ -12,10 +12,7 @@
  * The "importmap:require" command can be used to add new entries to this file.
  */
 return [
-    'imports' => [
-        'bootstrap' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js',
     
-    ],
     'app' => [
         'path' => './assets/app.js',
         'entrypoint' => true,
