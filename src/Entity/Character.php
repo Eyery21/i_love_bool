@@ -59,9 +59,16 @@ class Character
     #[ORM\ManyToMany(targetEntity: Book::class, mappedBy: 'personnage')]
     private Collection $books;
 
+    /**
+     * @var Collection<int, Book>
+     */
+    #[ORM\ManyToMany(targetEntity: Book::class, inversedBy: 'characters')]
+    private Collection $apparitions;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
+        $this->apparitions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -236,6 +243,30 @@ class Character
         if ($this->books->removeElement($book)) {
             $book->removePersonnage($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Book>
+     */
+    public function getApparitions(): Collection
+    {
+        return $this->apparitions;
+    }
+
+    public function addApparition(Book $apparition): static
+    {
+        if (!$this->apparitions->contains($apparition)) {
+            $this->apparitions->add($apparition);
+        }
+
+        return $this;
+    }
+
+    public function removeApparition(Book $apparition): static
+    {
+        $this->apparitions->removeElement($apparition);
 
         return $this;
     }
