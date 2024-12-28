@@ -21,10 +21,8 @@ class Book
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 600)]
     private ?string $description = null;
-
-  
 
     #[Vich\UploadableField(mapping: 'book_images', fileNameProperty: 'image')]
     private ?File $imageFile = null;
@@ -50,14 +48,11 @@ class Book
     #[ORM\Column(nullable: true)]
     private ?float $price = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $serie = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $volumeNumber = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $volum_number = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $page_count = null;
+    private ?int $pageCount = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $rating = null;
@@ -66,19 +61,18 @@ class Book
      * @var Collection<int, Character>
      */
     #[ORM\ManyToMany(targetEntity: Character::class, inversedBy: 'books')]
-    private Collection $personnage;
-
-    /**
-     * @var Collection<int, Character>
-     */
-    #[ORM\ManyToMany(targetEntity: Character::class, mappedBy: 'apparitions')]
     private Collection $characters;
+
+    #[ORM\ManyToOne(targetEntity: Series::class, inversedBy: 'books')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Series $series = null;
 
     public function __construct()
     {
-        $this->personnage = new ArrayCollection();
         $this->characters = new ArrayCollection();
     }
+
+    // Getters et setters
 
     public function getId(): ?int
     {
@@ -108,7 +102,6 @@ class Book
 
         return $this;
     }
-
 
     public function getImageFile(): ?File
     {
@@ -210,38 +203,26 @@ class Book
         return $this;
     }
 
-    public function getSerie(): ?string
+    public function getVolumeNumber(): ?int
     {
-        return $this->serie;
+        return $this->volumeNumber;
     }
 
-    public function setSerie(?string $serie): static
+    public function setVolumeNumber(?int $volumeNumber): static
     {
-        $this->serie = $serie;
-
-        return $this;
-    }
-
-    public function getVolumNumber(): ?int
-    {
-        return $this->volum_number;
-    }
-
-    public function setVolumNumber(?int $volum_number): static
-    {
-        $this->volum_number = $volum_number;
+        $this->volumeNumber = $volumeNumber;
 
         return $this;
     }
 
     public function getPageCount(): ?int
     {
-        return $this->page_count;
+        return $this->pageCount;
     }
 
-    public function setPageCount(?int $page_count): static
+    public function setPageCount(?int $pageCount): static
     {
-        $this->page_count = $page_count;
+        $this->pageCount = $pageCount;
 
         return $this;
     }
@@ -254,30 +235,6 @@ class Book
     public function setRating(?float $rating): static
     {
         $this->rating = $rating;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Character>
-     */
-    public function getPersonnage(): Collection
-    {
-        return $this->personnage;
-    }
-
-    public function addPersonnage(Character $personnage): static
-    {
-        if (!$this->personnage->contains($personnage)) {
-            $this->personnage->add($personnage);
-        }
-
-        return $this;
-    }
-
-    public function removePersonnage(Character $personnage): static
-    {
-        $this->personnage->removeElement($personnage);
 
         return $this;
     }
@@ -305,6 +262,18 @@ class Book
         if ($this->characters->removeElement($character)) {
             $character->removeApparition($this);
         }
+
+        return $this;
+    }
+
+    public function getSeries(): ?Series
+    {
+        return $this->series;
+    }
+
+    public function setSeries(?Series $series): static
+    {
+        $this->series = $series;
 
         return $this;
     }

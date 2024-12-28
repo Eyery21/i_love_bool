@@ -3,68 +3,94 @@
 {% block title %}Character{% endblock %}
 
 {% block body %}
-    <h1>Character</h1>
+<div class="character-background text-white" 
+     style="background-image: url('/uploads/character_images/{{ character.getBackgroundPage() }}'); 
+            width: 100%; 
+            min-height: 100vh; 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7); 
+            padding: 20px;">
+    <div class="container">
+        <h1 class="mb-4 text-center">Character Details</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ character.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ character.name }}</td>
-            </tr>
-            <tr>
-                <th>RealName</th>
-                <td>{{ character.realName }}</td>
-            </tr>
-            <tr>
-                <th>Alias</th>
-                <td>{{ character.alias }}</td>
-            </tr>
-            <tr>
-                <th>Alignment</th>
-                <td>{{ character.alignment }}</td>
-            </tr>
-            <tr>
-                <th>Espece</th>
-                <td>{{ character.espece }}</td>
-            </tr>
-            <tr>
-                <th>BaseOfOperations</th>
-                <td>{{ character.baseOfOperations }}</td>
-            </tr>
-            <tr>
-                <th>Nemesys</th>
-                <td>{{ character.nemesys }}</td>
-            </tr>
-            <tr>
-                <th>Occupation</th>
-                <td>{{ character.occupation }}</td>
-            </tr>
-            <tr>
-                <th>Affiliations</th>
-                <td>{{ character.affiliations ? character.affiliations|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>OriginStory</th>
-                <td>{{ character.originStory }}</td>
-            </tr>
-            <tr>
-                <th>Power</th>
-                <td>{{ character.power ? character.power|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Equipement</th>
-                <td>{{ character.equipement ? character.equipement|json_encode : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table table-bordered bg-light text-dark">
+            <tbody>
+                <tr>
+                    <th scope="row">Id</th>
+                    <td>{{ character.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Name</th>
+                    <td>{{ character.name }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Real Name</th>
+                    <td>{{ character.realName }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Alias</th>
+                    <td>{{ character.alias }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Alignment</th>
+                    <td>{{ character.alignment }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Species</th>
+                    <td>{{ character.espece }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Base of Operations</th>
+                    <td>{{ character.baseOfOperations }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Nemesis</th>
+                    <td>{{ character.nemesys }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Occupation</th>
+                    <td>{{ character.occupation }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Affiliations</th>
+                    <td>{{ character.affiliations ? character.affiliations|json_encode : 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Origin Story</th>
+                    <td>{{ character.originStory }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Powers</th>
+                    <td>{{ character.power ? character.power|json_encode : 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Equipment</th>
+                    <td>{{ character.equipement ? character.equipement|json_encode : 'N/A' }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_character_index') }}">back to list</a>
+        <h3 class="mt-5">Appearances</h3>
+        <ul class="list-group mb-4">
+            {% for book in books %}
+                <li class="list-group-item d-flex align-items-center bg-light">
+                    <span class="me-3">{{ book.title }}</span>
+                    <img src="/uploads/images/{{ book.image }}" alt="Book Image" class="img-thumbnail" style="max-width: 150px;">
+                                                <a href="{{ path('app_book_show', {'id': book.id}) }}">Show</a>
 
-    <a href="{{ path('app_character_edit', {'id': character.id}) }}">edit</a>
+                </li>
+            {% else %}
+                <li class="list-group-item bg-light">No books found.</li>
+            {% endfor %}
+        </ul>
 
-    {{ include('character/_delete_form.html.twig') }}
+        <div class="mt-4 text-center">
+            <a href="{{ path('app_character_index') }}" class="btn btn-primary">Back to List</a>
+            <a href="{{ path('app_character_edit', {'id': character.id}) }}" class="btn btn-secondary">Edit</a>
+            {{ include('character/_delete_form.html.twig') }}
+        </div>
+    </div>
+</div>
 {% endblock %}

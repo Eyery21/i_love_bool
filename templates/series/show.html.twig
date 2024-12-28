@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ series.title }}{% endblock %}
+
+{% block body %}
+
+<h2>Albums de la série</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+   
+        {% for book in books %}
+        
+        <h1>{{ book.title }}</h1>
+<p>{{ series.description }}</p>
+
+            <tr>
+                <td>{{ book.title }}</td>
+                <img src="/uploads/images/{{ book.image }}" alt="Image du livre" style="max-width: 150px;">
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun album trouvé pour cette série.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

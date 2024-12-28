@@ -1,4 +1,27 @@
  <div class="book-list">
+   <table class="table">
+        
+        <tbody>
+        {% for series in series %}
+          <a href="{{ path('app_series_show', {'id': series.id}) }}">
+            <tr>
+                <td>{{ series.title }}</td>
+                    {% if series.image %}
+                        <img src="/uploads/series_images/{{ series.image }}" alt="Image du livre" style="max-width: 150px;">
+                    {% else %}
+                        <em>Pas d'image</em>
+                    {% endif %}                
+                 
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+         </a>
+        </tbody>
+    </table>
         {% for book in books %}
             <div class="book-item" style="display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
                 <div class="book-details" style="flex: 1;">
@@ -10,8 +33,6 @@
                         <li><strong>Author:</strong> {{ book.author }}</li>
                         <li><strong>Illustrator:</strong> {{ book.illustrator }}</li>
                         <li><strong>Price:</strong> {{ book.price }}</li>
-                        <li><strong>Serie:</strong> {{ book.serie }}</li>
-                        <li><strong>Volume Number:</strong> {{ book.volumnumber }}</li>
                         <li><strong>Page Count:</strong> {{ book.pagecount }}</li>
                         <li><strong>Rating:</strong> {{ book.rating }}</li>
                         <li>

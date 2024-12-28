@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Entity\Character;
+use App\Entity\Series;
 use App\Entity\User;
+
 use App\Repository\UserRepository;
 use App\Form\BookType;
 use App\Repository\BookRepository;
@@ -23,12 +25,13 @@ final class BookController extends AbstractController
         
         $books = $bookRepository->findAll();
         $characters = $entityManager->getRepository(Character::class)->findAll();
-
+        $series = $entityManager->getRepository(Series::class)->findAll();
         $user = $this->getUser();
                 return $this->render('book/index.html.twig', [
             'books' => $books,
             'user' => $user,
             'characters' => $characters,
+            'series' => $series,
 
         ]);
     }
@@ -61,6 +64,7 @@ final class BookController extends AbstractController
         return $this->render('book/show.html.twig', [
             'book' => $book,
             'characters' => $characters,
+
 
         ]);
     }

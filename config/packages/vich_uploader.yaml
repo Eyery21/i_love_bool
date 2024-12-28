@@ -4,4 +4,15 @@ vich_uploader:
         book_images:
             uri_prefix: /uploads/images
             upload_destination: '%kernel.project_dir%/public/uploads/images'
-            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            namer:
+                service: Vich\UploaderBundle\Naming\SmartUniqueNamer
+        character_images:
+            uri_prefix: /uploads/character_images
+            upload_destination: '%kernel.project_dir%/public/uploads/character_images'
+            namer:
+                service: Vich\UploaderBundle\Naming\SmartUniqueNamer
+        series_images:
+            uri_prefix: /uploads/series_images
+            upload_destination: '%kernel.project_dir%/public/uploads/series_images'
+            namer:
+                service: Vich\UploaderBundle\Naming\SmartUniqueNamer

@@ -7,9 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
 #[ORM\Table(name: '`character`')]
+#[Vich\Uploadable]
+
 class Character
 {
     #[ORM\Id]
@@ -65,6 +69,21 @@ class Character
     #[ORM\ManyToMany(targetEntity: Book::class, inversedBy: 'characters')]
     private Collection $apparitions;
 
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[Vich\UploadableField(mapping: 'character_images', fileNameProperty: 'background_page')]
+    private ?File $backgroundPageFile = null;
+    
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $background_page = null;
+    
+    #[Vich\UploadableField(mapping: 'character_images', fileNameProperty: 'background_navbar')]
+    private ?File $backgroundNavbarFile = null;
+    
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $background_navbar = null;
+    
     public function __construct()
     {
         $this->books = new ArrayCollection();
@@ -270,4 +289,80 @@ class Character
 
         return $this;
     }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+    public function getBackgroundPageFile(): ?File
+    {
+        return $this->backgroundPageFile;
+    }
+    
+    public function setBackgroundPageFile(?File $backgroundPageFile): static
+    {
+        $this->backgroundPageFile = $backgroundPageFile;
+    
+
+        if ($backgroundPageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+        
+        return $this;
+    }
+    public function getBackgroundPage(): ?string
+    {
+        return $this->background_page;
+    }
+
+    public function setBackgroundPage(?string $background_page): static
+    {
+        $this->background_page = $background_page;
+
+        return $this;
+    }
+
+    public function getBackgroundNavbarFile(): ?File
+    {
+
+
+        return $this->backgroundNavbarFile;
+    }
+    
+    public function setBackgroundNavbarFile(?File $backgroundNavbarFile): static
+    {
+        $this->backgroundNavbarFile = $backgroundNavbarFile;
+
+
+        if ($backgroundNavbarFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    
+        return $this;
+    }
+
+    public function getBackgroundNavBar(): ?string
+    {
+        return $this->background_navbar;
+    }
+    public function setBackgroundNavBar(?string $background_navbar): static
+    {
+        $this->background_navbar = $background_navbar;
+
+        return $this;
+    }
+
+
+    public function __toString(): string
+    {
+        // Retourne une représentation textuelle de l'objet
+        return $this->name ?? ' ';
+    }
+
+
 }

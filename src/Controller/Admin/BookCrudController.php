@@ -14,6 +14,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FloatField;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+
 class BookCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
@@ -40,12 +42,18 @@ class BookCrudController extends AbstractCrudController
             MoneyField::new('price', 'Prix')
                 ->setCurrency('EUR')
                 ->setStoredAsCents(false), // Ajuste si tu utilises des centimes ou des décimales
-            TextField::new('serie', 'Série'),
-            IntegerField::new('volum_number', 'Numéro de volume'),
             IntegerField::new('page_count', 'Nombre de pages'),
             IntegerField::new('rating', 'Note (sur 5)'),
             DateTimeField::new('updatedAt', 'Dernière mise à jour')
                 ->hideOnForm(),
+            AssociationField::new('series', 'Series')
+            ->setCrudController(SeriesCrudController::class)
+            ->setFormTypeOption('choice_label', 'title'), // Utilise le titre pour l'affichage
+
+            AssociationField::new('characters', 'Characters')
+            ->setCrudController(CharacterCrudController::class)
+            ->setFormTypeOption('choice_label', 'name')
+
         ];
     }
 }

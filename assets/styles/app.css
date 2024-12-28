@@ -1,4 +1,18 @@
 body {
-    background-color: rgb(79, 58, 58);
+    background-color: red;
 }
-
+.h1 {
+    color: red;
+}
+.character-background {
+    width: 100%; /* ou la largeur que vous souhaitez */
+    height: 300px; /* hauteur du conteneur */
+    background-size: cover; /* L'image couvre tout l'espace */
+    background-position: center; /* Centrer l'image */
+    background-repeat: no-repeat; /* Ne pas répéter l'image */
+    display: flex; /* Optionnel : pour centrer le contenu */
+    align-items: center; /* Optionnel : centrer verticalement le contenu */
+    justify-content: center; /* Optionnel : centrer horizontalement le contenu */
+    color: white; /* Optionnel : couleur du texte */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7); /* Optionnel : ajouter une ombre au texte */
+}

@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+
+use App\Entity\Book;
 use App\Entity\Character;
+
 use App\Form\CharacterType;
 use App\Repository\CharacterRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,6 +50,8 @@ final class CharacterController extends AbstractController
     {
         return $this->render('character/show.html.twig', [
             'character' => $character,
+            'books' => $character->getApparitions(),
+            
         ]);
     }
 

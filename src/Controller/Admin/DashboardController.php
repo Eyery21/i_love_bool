@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller\Admin;
+use App\Entity\Series;
 use App\Entity\User;
 use App\Entity\Book;
 use App\Entity\Character;
@@ -28,7 +29,9 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Books', 'fa fa-book', Book::class);
-        yield MenuItem::linkToCrud('Character', 'fa fa-book', Character::class);
+        yield MenuItem::linkToCrud('Character', 'fa fa-book', entityFqcn: Character::class);
+        yield MenuItem::linkToCrud('Series', 'fa fa-book', entityFqcn: Series::class);
+
 
     }
 }
