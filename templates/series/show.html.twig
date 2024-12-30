@@ -6,21 +6,15 @@
 
 <h2>Albums de la série</h2>
 
-<table>
-    <thead>
-        <tr>
-            <th>Title</th>
-            
-        </tr>
-    </thead>
-    <tbody>
-   
         {% for book in books %}
+<table>
+   
+   
         
-        <h1>{{ book.title }}</h1>
-<p>{{ series.description }}</p>
-
             <tr>
+        <h1>{{ book.title }}</h1>
+        <p>{{ series.description }}</p>
+
                 <td>{{ book.title }}</td>
                 <img src="/uploads/images/{{ book.image }}" alt="Image du livre" style="max-width: 150px;">
 

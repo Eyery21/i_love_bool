@@ -67,6 +67,9 @@ class Book
     #[ORM\JoinColumn(nullable: true)]
     private ?Series $series = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $subtitle = null;
+
     public function __construct()
     {
         $this->characters = new ArrayCollection();
@@ -274,6 +277,18 @@ class Book
     public function setSeries(?Series $series): static
     {
         $this->series = $series;
+
+        return $this;
+    }
+
+    public function getSubtitle(): ?string
+    {
+        return $this->subtitle;
+    }
+
+    public function setSubtitle(string $subtitle): static
+    {
+        $this->subtitle = $subtitle;
 
         return $this;
     }
