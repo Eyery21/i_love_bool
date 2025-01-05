@@ -27,6 +27,8 @@
                 <div class="book-details" style="flex: 1;">
                     <ul style="list-style: none; padding: 0;">
                         <li><strong>Title:</strong> {{ book.title }}</li>
+                        <li><strong>SubTitle:</strong> {{ book.subtitle }}</li>
+
                         <li><strong>Description:</strong> {{ book.description }}</li>
                         <li><strong>Parution:</strong> {{ book.parution }}</li>
                         <li><strong>Posseded:</strong> {{ book.posseded ? 'Yes' : 'No' }}</li>
@@ -36,7 +38,8 @@
                         <li><strong>Page Count:</strong> {{ book.pagecount }}</li>
                         <li><strong>Rating:</strong> {{ book.rating }}</li>
                         <li>
-                            <a href="{{ path('app_book_show', {'id': book.id}) }}">Show</a>
+                            <a href="{{ path('app_book_show', { 'id': book.id, 'slug': book.title|slug }) }}">Show</a>
+
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('app_book_edit', {'id': book.id}) }}">Edit</a>
                             {% endif %}

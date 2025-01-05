@@ -28,6 +28,8 @@ class BookCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('title', 'Titre'),
+            TextField::new('subtitle', 'SubTitre'),
+
             TextEditorField::new('description', 'Description'),
             TextField::new('parution', 'Date de parution'),
             BooleanField::new('posseded', 'Possédé'),

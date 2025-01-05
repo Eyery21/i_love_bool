@@ -6,6 +6,7 @@ use App\Entity\Book;
 use App\Entity\Character;
 use App\Entity\Series;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 use App\Repository\UserRepository;
 use App\Form\BookType;
@@ -19,6 +20,12 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/book')]
 final class BookController extends AbstractController
 {
+
+    public function getSlug(): string
+    {
+        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', ' ', $this->title), ' '));
+    }
+    
     #[Route( name: 'app_book_index', methods: ['GET'])]
     public function index(BookRepository $bookRepository, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
@@ -56,15 +63,24 @@ final class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_book_show', methods: ['GET'])]
-    public function show(Book $book, EntityManagerInterface $entityManager): Response
+
+    #[Route('/{id}/{slug}', name: 'app_book_show', methods: ['GET'])]
+    public function show(Book $book, string $slug, EntityManagerInterface $entityManager): Response
+    
+
+
     {
         $characters = $entityManager->getRepository(Character::class)->findAll();
-
-        return $this->render('book/show.html.twig', [
+        $series = $book->getSeries();
+        $otherBooks = [];
+        if ($series) {
+            $otherBooks = $entityManager->getRepository(Book::class)->findBy(['series' => $series]);
+        }
+                return $this->render('book/show.html.twig', [
             'book' => $book,
             'characters' => $characters,
-
+            'series' => $series,
+            'otherBooks' => $otherBooks,
 
         ]);
     }

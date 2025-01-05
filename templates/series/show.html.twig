@@ -13,10 +13,11 @@
         
             <tr>
         <h1>{{ book.title }}</h1>
-        <p>{{ series.description }}</p>
+            <li><strong>SubTitle:</strong> {{ book.subtitle }}</li>
 
-                <td>{{ book.title }}</td>
                 <img src="/uploads/images/{{ book.image }}" alt="Image du livre" style="max-width: 150px;">
+             <a href="{{ path('app_book_show', {'id': book.id}) }}">Show</a>
+
 
             </tr>
         {% else %}

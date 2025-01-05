@@ -16,3 +16,6 @@ body {
     color: white; /* Optionnel : couleur du texte */
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7); /* Optionnel : ajouter une ombre au texte */
 }
+.machin {
+    background-color: aqua;
+}
