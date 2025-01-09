@@ -44,16 +44,39 @@ final class CharacterController extends AbstractController
             'form' => $form,
         ]);
     }
-
     #[Route('/{id}', name: 'app_character_show', methods: ['GET'])]
-    public function show(Character $character): Response
+    public function show(Character $character, EntityManagerInterface $entityManager): Response
     {
+        // Requête pour récupérer les séries avec au moins un livre
+        $seriesWithBooks = $entityManager->createQueryBuilder()
+            ->select('s', 'b')
+            ->from('App\Entity\Series', 's')
+            ->join('s.books', 'b')
+            ->join('b.characters', 'c')
+            ->where('c.id = :characterId')
+            ->setParameter('characterId', $character->getId())
+            ->getQuery()
+            ->getResult();
+    
+        // Requête pour récupérer les livres one-shot (sans série)
+        $oneShotBooks = $entityManager->createQueryBuilder()
+            ->select('b')
+            ->from('App\Entity\Book', 'b')
+            ->leftJoin('b.series', 's')
+            ->join('b.characters', 'c')
+            ->where('c.id = :characterId AND s IS NULL')
+            ->setParameter('characterId', $character->getId())
+            ->getQuery()
+            ->getResult();
+    
         return $this->render('character/show.html.twig', [
             'character' => $character,
-            'books' => $character->getApparitions(),
-            
+            'seriesWithBooks' => $seriesWithBooks,
+            'oneShotBooks' => $oneShotBooks,
         ]);
     }
+    
+    
 
     #[Route('/{id}/edit', name: 'app_character_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Character $character, EntityManagerInterface $entityManager): Response

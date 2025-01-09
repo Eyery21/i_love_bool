@@ -57,31 +57,28 @@
 		</div>
 	</div>
 	<p>
-
-
-
-	{% if is_granted('ROLE_ADMIN') %}
-	
-	            <a href="{{ path('app_book_new') }}">Create new</a>
-	        {% endif %}
+		{% if is_granted('ROLE_ADMIN') %}
+			<a href="{{ path('app_book_new') }}">Create new</a>
+		{% endif %}
+	</p>
 
 	{% if otherBooks|length > 1 %}
-		<ul class="machin" style="background-color :red ">
+		<ul class="machin" style="">
 			{% for otherBook in otherBooks %}
 				{% if otherBook.id != book.id %}
-						<li>
-<a href="{{ path('app_book_show', { 'id': book.id, 'slug': book.title|slug }) }}">Show</a>
+					<li>
+						<a href="{{ path('app_book_show', { 'id': otherBook.id, 'slug': otherBook.title|slug }) }}">
 							{% if otherBook.image %}
 								<img src="/uploads/images/{{ otherBook.image }}" alt="{{ otherBook.title }}" style="max-width: 100%;">
 							{% else %}
 								<em>Pas d'image</em>
 							{% endif %}
+							show
 						</a>
-						</li>
+					</li>
 				{% endif %}
 			{% endfor %}
 		</ul>
 	{% else %}
 		<p>Aucun autre album dans cette série.</p>
 	{% endif %}
-</div>

@@ -29,7 +29,7 @@ class Series
     #[ORM\JoinColumn(nullable: false)]
     private ?Character $character = null; // Relation vers un personnage existant
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 600, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]

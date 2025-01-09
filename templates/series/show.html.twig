@@ -16,7 +16,7 @@
             <li><strong>SubTitle:</strong> {{ book.subtitle }}</li>
 
                 <img src="/uploads/images/{{ book.image }}" alt="Image du livre" style="max-width: 150px;">
-             <a href="{{ path('app_book_show', {'id': book.id}) }}">Show</a>
+							<a href="{{ path('app_book_show', { 'id': book.id, 'slug': book.title|slug }) }}">Show</a>
 
 
             </tr>
