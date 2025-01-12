@@ -25,7 +25,7 @@ class SeriesCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('title', 'Title'),
-            BooleanField::new('isOneShot', 'Is Series?'),
+            BooleanField::new('isOneShot', 'Is One Shot'),
             AssociationField::new('character', 'Character'),
             TextareaField::new('description', 'Description')->hideOnIndex(),
             NumberField::new('length', 'Number of Volumes')->hideOnIndex(),

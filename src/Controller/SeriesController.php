@@ -3,9 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Entity\Character;
 use App\Entity\Series;
-
 use App\Form\SeriesType;
+use App\Repository\CharacterRepository;
 use App\Repository\SeriesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,10 +18,13 @@ use Symfony\Component\Routing\Attribute\Route;
 final class SeriesController extends AbstractController
 {
     #[Route(name: 'app_series_index', methods: ['GET'])]
-    public function index(SeriesRepository $seriesRepository): Response
+    public function index(SeriesRepository $seriesRepository, CharacterRepository $characterReposytory, EntityManagerInterface $entityManager): Response
     {
+        $series = $seriesRepository->findAll();
+
         return $this->render('series/index.html.twig', [
-            'series' => $seriesRepository->findAll(),
+            'series' => $series,
+
         ]);
     }
 

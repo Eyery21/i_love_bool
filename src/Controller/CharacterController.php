@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Entity\Character;
+use App\Entity\Series;
 
 use App\Form\CharacterType;
 use App\Repository\CharacterRepository;
@@ -47,6 +48,8 @@ final class CharacterController extends AbstractController
     #[Route('/{id}', name: 'app_character_show', methods: ['GET'])]
     public function show(Character $character, EntityManagerInterface $entityManager): Response
     {
+        $series = $entityManager->getRepository(Series::class)->findAll();
+
         // Requête pour récupérer les séries avec au moins un livre
         $seriesWithBooks = $entityManager->createQueryBuilder()
             ->select('s', 'b')
@@ -73,6 +76,7 @@ final class CharacterController extends AbstractController
             'character' => $character,
             'seriesWithBooks' => $seriesWithBooks,
             'oneShotBooks' => $oneShotBooks,
+            'series' => $series,
         ]);
     }
     

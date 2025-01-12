@@ -1,31 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ series.title }}{% endblock %}
+{% block title %}
+	{{ series.title }}
+{% endblock %}
 
 {% block body %}
 
-<h2>Albums de la série</h2>
-
-        {% for book in books %}
-<table>
-   
-   
-        
-            <tr>
-        <h1>{{ book.title }}</h1>
-            <li><strong>SubTitle:</strong> {{ book.subtitle }}</li>
-
-                <img src="/uploads/images/{{ book.image }}" alt="Image du livre" style="max-width: 150px;">
-							<a href="{{ path('app_book_show', { 'id': book.id, 'slug': book.title|slug }) }}">Show</a>
+	<h2>Albums de la série</h2>
+				<td>{{ series.description }}</td>
+				<img src="/uploads/series_images/{{ series.image }}" alt="Image du livre" style="max-width: 150px;">
+	{% for book in books %}
+		<table>
 
 
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">Aucun album trouvé pour cette série.</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+			<tr>
+				<h1>{{ book.title }}</h1>
+				<li>
+					<strong>SubTitle:</strong>
+					{{ book.subtitle }}</li>
+				<img src="/uploads/images/{{ book.image }}" alt="Image du livre" style="max-width: 150px;">
+				<a href="{{ path('app_book_show', { 'id': book.id, 'slug': book.title|slug }) }}">Show</a>
 
-{% endblock %}
+
+			</tr>
+		{% else %}
+			<tr>
+				<td colspan="5">Aucun album trouvé pour cette série.</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>{% endblock %}

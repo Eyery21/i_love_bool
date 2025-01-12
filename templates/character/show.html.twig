@@ -5,22 +5,19 @@
 
 {% block body %}
 	<div class="character-background text-white" style="background-image: url('/uploads/character_images/{{ character.getBackgroundPage() }}');
-																											            width: 100%;
-																											            min-height: 100vh;
-																											            background-size: cover;
-																											            background-position: center;
-																											            background-repeat: no-repeat;
-																											            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-																											            padding: 20px;">
+																																				            width: 100%;
+																																				            min-height: 100vh;
+																																				            background-size: cover;
+																																				            background-position: center;
+																																				            background-repeat: no-repeat;
+																																				            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+																																				            padding: 20px;">
 		<div class="container">
 			<h1 class="mb-4 text-center">Character Details</h1>
 
 			<table class="table table-bordered bg-light text-dark">
 				<tbody>
-					<tr>
-						<th scope="row">Id</th>
-						<td>{{ character.id }}</td>
-					</tr>
+					
 					<tr>
 						<th scope="row">Name</th>
 						<td>{{ character.name }}</td>
@@ -76,31 +73,45 @@
 
 			<h2>Séries</h2>
 			<ul>
-				{% for series in seriesWithBooks %}
-					<li>
-						{% set book = series.books|first %}
-						{# On affiche la première image de la série #}
-						<img src="/uploads/images/{{ book.image }}" alt="{{ book.title }}" style="max-width: 150px;">
-						<a href="{{ path('app_series_show', { 'id': series.id }) }}">Voir la série</a>
-					</li>
+				{% for series in series %}
+					{% if series.length > 1 %}
+						<li>
+							<strong>{{ series.title }}</strong>
+							{% if series.image %}
+								<img src="/uploads/series_images/{{ series.image }}" alt="{{ series.title }}" style="max-width: 150px;">
+							{% else %}
+								<em>Pas d'image</em>
+							{% endif %}
+							<p>Série en
+								{{ series.length }}
+								tomes</p>
+							<a href="{{ path('app_series_show', {'id': series.id}) }}">Voir la série</a>
+						</li>
+					{% endif %}
 				{% else %}
 					<li>Aucune série trouvée.</li>
 				{% endfor %}
 			</ul>
 
-			<h2>Livres One-shot</h2>
+			<h2>One-Shots</h2>
 			<ul>
-				{% for book in oneShotBooks %}
-					<li>
-						<strong>{{ book.title }}</strong>
-						<img src="/uploads/images/{{ book.image }}" alt="{{ book.title }}" style="max-width: 150px;">
-						<a href="{{ path('app_book_show', { 'id': book.id, 'slug': book.title|slug }) }}">Show</a>
-					</li>
+				{% for series in series %}
+					{% if series.length == 1 %}
+						<li>
+							<strong>{{ series.title }}</strong>
+							{% if series.image %}
+								<img src="/uploads/series_images/{{ series.image }}" alt="{{ series.title }}" style="max-width: 150px;">
+							{% else %}
+								<em>Pas d'image</em>
+							{% endif %}
+							<p>récit complet</p>
+							<a href="{{ path('app_series_show', {'id': series.id}) }}">Voir le one-shot</a>
+						</li>
+					{% endif %}
 				{% else %}
-					<li>Aucun livre One-shot trouvé.</li>
+					<li>Aucun one-shot trouvé.</li>
 				{% endfor %}
 			</ul>
-
 
 			<div class="mt-4 text-center">
 				<a href="{{ path('app_character_index') }}" class="btn btn-primary">Back to List</a>

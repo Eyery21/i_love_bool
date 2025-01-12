@@ -1,0 +1,45 @@
+
+{% block title %}Series index
+{% endblock %}
+
+{% block body %}
+	<h1>Series index</h1>
+
+	{% for series in series %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Hero</th>
+					<th>Description</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ series.title }}</td>
+					{% if series.image %}
+						<img src="/uploads/series_images/{{ series.image }}" alt="Image du livre" style="max-width: 150px;">
+					{% else %}
+						<em>Pas d'image</em>
+					{% endif %}
+					<p>Personnage associé :
+						{{ series.character.realName }}</p>
+					<td>
+						<a href="{{ path('app_series_show', {'id': series.id}) }}">show</a>
+						<a href="{{ path('app_series_edit', {'id': series.id}) }}">edit</a>
+					</td>
+				</tr>
+				<td>serie en {{ series.length }} tomes</td>
+
+			{% else %}
+				<tr>
+					<td colspan="6">no records found</td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_series_new') }}">Create new</a>
+{% endblock %}
