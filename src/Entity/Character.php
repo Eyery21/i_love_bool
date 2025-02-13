@@ -83,11 +83,18 @@ class Character
     
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $background_navbar = null;
+
+    /**
+     * @var Collection<int, GroupeOfCharacter>
+     */
+    #[ORM\ManyToMany(targetEntity: GroupeOfCharacter::class, mappedBy: 'members')]
+    private Collection $groupeOfCharacters;
     
     public function __construct()
     {
         $this->books = new ArrayCollection();
         $this->apparitions = new ArrayCollection();
+        $this->groupeOfCharacters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -362,6 +369,33 @@ class Character
     {
         // Retourne une représentation textuelle de l'objet
         return $this->name ?? ' ';
+    }
+
+    /**
+     * @return Collection<int, GroupeOfCharacter>
+     */
+    public function getGroupeOfCharacters(): Collection
+    {
+        return $this->groupeOfCharacters;
+    }
+
+    public function addGroupeOfCharacter(GroupeOfCharacter $groupeOfCharacter): static
+    {
+        if (!$this->groupeOfCharacters->contains($groupeOfCharacter)) {
+            $this->groupeOfCharacters->add($groupeOfCharacter);
+            $groupeOfCharacter->addMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupeOfCharacter(GroupeOfCharacter $groupeOfCharacter): static
+    {
+        if ($this->groupeOfCharacters->removeElement($groupeOfCharacter)) {
+            $groupeOfCharacter->removeMember($this);
+        }
+
+        return $this;
     }
 
 

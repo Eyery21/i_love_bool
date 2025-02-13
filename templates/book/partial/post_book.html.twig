@@ -16,7 +16,7 @@
 		{% else %}
 
 	{% endfor %}
-	{% for book in books %}
+	{# {% for book in books %}
 		<div class="book-item" style="display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
 			<div class="book-details" style="flex: 1;">
 				<ul style="list-style: none; padding: 0;">
@@ -70,7 +70,7 @@
 		</div>
 	{% else %}
 		<p>No records found</p>
-	{% endfor %}
+	{% endfor %} #}
 	{% if is_granted('ROLE_ADMIN') %}
 
 		<a href="{{ path('app_book_new') }}">Create new</a>

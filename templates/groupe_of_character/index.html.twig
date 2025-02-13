@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GroupeOfCharacter index{% endblock %}
+
+{% block body %}
+    <h1>GroupeOfCharacter index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Fonded_at</th>
+                <th>Image</th>
+                <th>Alignment</th>
+                <th>Headquarters</th>
+                <th>Created_at</th>
+                <th>Updated_at</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for groupe_of_character in groupe_of_characters %}
+            <tr>
+                <td>{{ groupe_of_character.id }}</td>
+                <td>{{ groupe_of_character.name }}</td>
+                <td>{{ groupe_of_character.description }}</td>
+                <td>{{ groupe_of_character.fondedAt ? groupe_of_character.fondedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ groupe_of_character.image }}</td>
+                <td>{{ groupe_of_character.alignment }}</td>
+                <td>{{ groupe_of_character.headquarters }}</td>
+                <td>{{ groupe_of_character.createdAt ? groupe_of_character.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ groupe_of_character.updatedAt ? groupe_of_character.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_groupe_of_character_show', {'id': groupe_of_character.id}) }}">show</a>
+                    <a href="{{ path('app_groupe_of_character_edit', {'id': groupe_of_character.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_groupe_of_character_new') }}">Create new</a>
+{% endblock %}

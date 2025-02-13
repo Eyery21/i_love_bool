@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New GroupeOfCharacter{% endblock %}
+
+{% block body %}
+    <h1>Create new GroupeOfCharacter</h1>
+
+    {{ include('groupe_of_character/_form.html.twig') }}
+
+    <a href="{{ path('app_groupe_of_character_index') }}">back to list</a>
+{% endblock %}

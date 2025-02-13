@@ -48,11 +48,9 @@ final class CharacterController extends AbstractController
     #[Route('/{id}', name: 'app_character_show', methods: ['GET'])]
     public function show(Character $character, EntityManagerInterface $entityManager): Response
     {
-        $series = $entityManager->getRepository(Series::class)->findAll();
-
-        // Requête pour récupérer les séries avec au moins un livre
+        // Récupérer uniquement les séries où ce personnage apparaît
         $seriesWithBooks = $entityManager->createQueryBuilder()
-            ->select('s', 'b')
+            ->select('s')
             ->from('App\Entity\Series', 's')
             ->join('s.books', 'b')
             ->join('b.characters', 'c')
@@ -61,24 +59,27 @@ final class CharacterController extends AbstractController
             ->getQuery()
             ->getResult();
     
-        // Requête pour récupérer les livres one-shot (sans série)
+        // Récupérer uniquement les one-shots où ce personnage apparaît
         $oneShotBooks = $entityManager->createQueryBuilder()
             ->select('b')
             ->from('App\Entity\Book', 'b')
             ->leftJoin('b.series', 's')
             ->join('b.characters', 'c')
-            ->where('c.id = :characterId AND s IS NULL')
+            ->where('c.id = :characterId')
+            ->andWhere('s.id IS NULL') // Assurer que ce sont des one-shots
             ->setParameter('characterId', $character->getId())
             ->getQuery()
             ->getResult();
     
+
+        dump($seriesWithBooks, $oneShotBooks);
         return $this->render('character/show.html.twig', [
             'character' => $character,
-            'seriesWithBooks' => $seriesWithBooks,
-            'oneShotBooks' => $oneShotBooks,
-            'series' => $series,
+            'series' => $seriesWithBooks,
+            'oneShot' => $oneShotBooks,
         ]);
     }
+    
     
     
 

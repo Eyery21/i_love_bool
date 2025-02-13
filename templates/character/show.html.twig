@@ -5,19 +5,19 @@
 
 {% block body %}
 	<div class="character-background text-white" style="background-image: url('/uploads/character_images/{{ character.getBackgroundPage() }}');
-																																				            width: 100%;
-																																				            min-height: 100vh;
-																																				            background-size: cover;
-																																				            background-position: center;
-																																				            background-repeat: no-repeat;
-																																				            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-																																				            padding: 20px;">
+																																										            width: 100%;
+																																										            min-height: 100vh;
+																																										            background-size: cover;
+																																										            background-position: center;
+																																										            background-repeat: no-repeat;
+																																										            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+																																										            padding: 20px;">
 		<div class="container">
 			<h1 class="mb-4 text-center">Character Details</h1>
 
 			<table class="table table-bordered bg-light text-dark">
 				<tbody>
-					
+
 					<tr>
 						<th scope="row">Name</th>
 						<td>{{ character.name }}</td>
@@ -71,10 +71,10 @@
 
 			<h3 class="mt-5">Appearances</h3>
 
-			<h2>Séries</h2>
 			<ul>
 				{% for series in series %}
 					{% if series.length > 1 %}
+						<h2>Séries</h2>
 						<li>
 							<strong>{{ series.title }}</strong>
 							{% if series.image %}
@@ -93,10 +93,10 @@
 				{% endfor %}
 			</ul>
 
-			<h2>One-Shots</h2>
 			<ul>
 				{% for series in series %}
 					{% if series.length == 1 %}
+						<h2>One-Shots</h2>
 						<li>
 							<strong>{{ series.title }}</strong>
 							{% if series.image %}

@@ -3,13 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Character;
+use App\Entity\GroupeOfCharacter;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class CharacterCrudController extends AbstractCrudController
@@ -23,6 +24,8 @@ class CharacterCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
+            
+            // Champs texte
             TextField::new('name', 'Nom'),
             TextField::new('realName', 'Nom Réel'),
             TextField::new('alias', 'Alias')->hideOnIndex(),
@@ -31,12 +34,19 @@ class CharacterCrudController extends AbstractCrudController
             TextField::new('baseOfOperations', 'Base d’Opérations')->hideOnIndex(),
             TextField::new('nemesys', 'Némésis')->hideOnIndex(),
             TextField::new('occupation', 'Occupation')->hideOnIndex(),
-            ArrayField::new('affiliations', 'Affiliations')->hideOnIndex(),
+            
+            // Relation avec GroupeOfCharacter
+            AssociationField::new('groupeOfCharacters', 'Groupes Associés')
+                ->setCrudController(GroupeOfCharacterCrudController::class)
+                ->setFormTypeOption('choice_label', 'name') // Utilise le champ `name` de GroupeOfCharacter pour l'affichage
+                ->hideOnIndex(),
+
+            // Champs texte étendus
             TextEditorField::new('originStory', 'Histoire d’Origine')->hideOnIndex(),
             ArrayField::new('power', 'Pouvoirs')->hideOnIndex(),
             ArrayField::new('equipement', 'Équipements')->hideOnIndex(),
 
-            // Image pour background_page
+            // Gestion des images (background_page)
             ImageField::new('background_page', 'Aperçu de l’image de fond')
                 ->setBasePath('/uploads/images')
                 ->onlyOnIndex(),
@@ -44,7 +54,7 @@ class CharacterCrudController extends AbstractCrudController
                 ->setFormType(VichImageType::class)
                 ->onlyOnForms(),
 
-            // Image pour background_navbar
+            // Gestion des images (background_navbar)
             ImageField::new('background_navbar', 'Aperçu de l’image de la barre de navigation')
                 ->setBasePath('/uploads/images')
                 ->onlyOnIndex(),
